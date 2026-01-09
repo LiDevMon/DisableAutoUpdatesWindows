@@ -15,6 +15,11 @@ if __name__ == '__main__':
         checkSystem.changeServiceStartType('wuauserv', 'disabled')
         checkSystem.regeditDisableUpdate('NoAutoUpdate', 1, REG_DWORD, r'SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU')
 
+    if(windowsVersion == 7):
+        checkSystem.stopUpdateService('wuauserv')
+        checkSystem.changeServiceStartType('wuauserv', 'disabled')
+        checkSystem.regeditDisableUpdate('DisableOSUpgrade', 1, REG_DWORD, r'SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate')
+        
     print('Программа завершила своё выполнение!\n')
     print('Автор:\n')
     print('https://github.com/LiDevMon', '\n')

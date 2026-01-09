@@ -28,16 +28,16 @@ def stopUpdateService(service_name:str) -> None:
             result = subprocess.run(['sc', 'stop', service_name], capture_output=True, text=True, check=False)
 
             if(result.returncode == 0):
-                config.debug_success('Служба успешно остановлена')
+                config.debug_success('The service is stopped')
             
             elif(result.returncode == 1062):
-                config.debug_warning('Служба не запущена. Скорее всего она была остановлена ранее.')
+                config.debug_warning('The service is\'t stopped. The service may have been stopped earlier')
 
             else:
-                config.debug_error(f'Ошибка при остановке службы код: {result.returncode}')
+                config.debug_error(f'Error with the service stop, code: {result.returncode}')
                 print(result.stderr.strip())
         else:
-            config.debug_warning('Запустите программу от имени администратора!')
+            config.debug_warning('Run the application as an administrator!')
 
     except Exception as e:
         config.debug_error(e)
@@ -57,13 +57,13 @@ def changeServiceStartType(service_name:str, start_type:str) -> None:
             result = subprocess.run(['sc', 'config', service_name, 'start=', start_type], capture_output=True, text=True, check=False)
 
             if(result.returncode == 0):
-                config.debug_success(f'Тип запуска службы изменён на {start_type}')
+                config.debug_success(f'The service start type changed on: {start_type}')
             
             else:
-                config.debug_error(f'Ошибка при остановке службы код: {result.returncode}')
+                config.debug_error(f'Error with the service stop, code: {result.returncode}')
                 print(result.stderr.strip())
         else:
-            config.debug_warning('Запустите программу от имени администратора!')
+            config.debug_warning('Run the application as an administrator!')
 
     except Exception as e:
         config.debug_error(e)
@@ -85,7 +85,7 @@ def regeditDisableUpdate(key_name:str, value:str, key_type:winreg.HKEYType, path
         with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE, path, 0, access=winreg.KEY_ALL_ACCESS) as key:
             winreg.SetValueEx(key, key_name, 0, key_type, value)
         
-        config.debug_success('Реестр изменён')
+        config.debug_success('Registry was changed')
 
     except Exception as e:
         config.debug_error(e)
